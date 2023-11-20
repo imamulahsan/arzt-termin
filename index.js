@@ -3,6 +3,13 @@ const express = require('express');
 const colors = require('colors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const connectDB = require("./config/db");
+
+//dotenv conig
+dotenv.config();
+
+//mongodb connection
+connectDB();
 
 
 // Create an instance of the Express application
@@ -15,11 +22,13 @@ app.get('/', (req, res) => {
     })
   })
 
-  const port =8080;
+//port
+const port = process.env.PORT || 8080;
 
-  app.listen(port, () => {
-    console.log(
-      `Server Running in  Mode on port`
-        .bgCyan.white
-    );
-  });
+//listen port
+app.listen(port, () => {
+  console.log(
+    `Server Running on port ${process.env.PORT}`
+      .bgCyan.white
+  );
+});
