@@ -1,20 +1,35 @@
 import React from 'react'
-import { Button, Divider, Form, Input, Typography } from 'antd';
+import { Button, Divider, Form, Input, Typography, message } from 'antd';
+import axios from "axios";
 import "../styles/RegisterStyle.css"
-import {Link} from 'react-router-dom';
-
-const onFinish = (values) => {
-  console.log('Success:', values);
-};
-
+import {Link, useNavigate} from 'react-router-dom';
 
 const Register = () => {
+  const navigate = useNavigate()
+
+  const onFinish = async (values) => {
+    try{
+      const res = await axios.post('/api/v1/user/register' , values)
+      if(res.data.success){
+        message.success('User Registered Successfully')
+        navigate('/login')
+      }
+      else{
+        message.error(res.data.message)
+      }
+    }
+    catch(error){
+      console.log(error)
+      message.error('Something went wrong')
+    }
+  };
   return (
     <>
     <div className='reg-form-container'>
       <Form
         className='register-form'
         initialValues={{ remember: true }}
+        layout='vertical'
         onFinish={onFinish}
         autoComplete="off">
         <div className='reg-form-text'>
@@ -24,12 +39,6 @@ const Register = () => {
         </div>
         <Form.Item label="Name des Patienten" name="name" rules={[{ required: true, message: 'Please input your username!' }]}>
           <Input type='text' required></Input>
-        </Form.Item>
-        <Form.Item label="Adresse" name="address" rules={[{ required: true, message: 'Please input your address!' }]}>
-          <Input type='text' required></Input>
-        </Form.Item>
-        <Form.Item label="Geburtsdatum" name="dob" rules={[{ required: true, message: 'Please input your date of birth!' }]}>
-          <Input type='date' required></Input>
         </Form.Item>
         <Form.Item label="E-Mail-Adresse" name="email" rules={[{ required: true, message: 'Please a valid email!' }]}>
           <Input type='email' required></Input>
