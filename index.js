@@ -15,12 +15,12 @@ connectDB();
 // Create an instance of the Express application
 const app = express();
 
+//middlewares
+app.use(express.json());
+app.use(morgan("dev"));
+
 // Route handler
-app.get('/', (req, res) => {
-    res.status(200).send({
-        message: "server running"
-    })
-  })
+app.use("/api/v1/user", require("./routes/userRoutes"));
 
 //port
 const port = process.env.PORT || 8080;
