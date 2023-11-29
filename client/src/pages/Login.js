@@ -1,10 +1,29 @@
 import React from 'react';
-import { Row, Col, Form, Input, Button, Image, Typography, Divider } from 'antd';
+import { Row, Col, Form, Input, Button, Image, Typography, Divider, message } from 'antd';
 import loginFormImage from '../images/login-form-bg.jpg';
 import "../styles/LoginStyle.css"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
+
+  const navigate = useNavigate()
+
+  const onfinishHandler = async(values) => {
+    try {
+      const res = await axios.post("/api/v1/user/login", values);
+      if (res.data.success) {
+        localStorage.setItem("token", res.data.token);
+        message.success("Login Successfully");
+        navigate("/");
+      } else {
+        message.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      message.error("something went wrong");
+    }
+  };
   return (
     <div className='login-container'>
       <Row gutter={4}>
@@ -20,6 +39,7 @@ const Login = () => {
           initialValues={{ remember: true }}
           autoComplete="off"
           layout='vertical'
+          onFinish={onfinishHandler}
           className='login-form'>
         <div className='login-form-text'>
         <Typography style={{color: '#FDFEFE', textAlign:'center'}}>Melden Sie sich als Patient an</Typography>
