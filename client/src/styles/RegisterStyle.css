@@ -1,3 +1,5 @@
+/*-----registerpage--------*/
+
 .reg-form-container{
     display: flex;
     align-items: center;
@@ -6,25 +8,26 @@
     height: 100vh;
     background: url(../images/register-form-bg.jpg);
     background-size: cover;
-}
-
-.reg-form-text{
+  }
+  
+  .reg-form-text{
     background-color: rgba(21, 67, 96, 0.66);
     padding: 5px;
     border-radius: 16px;
     margin-bottom: 32px;
-}
-
-.register-form{
+  }
+  
+  .register-form{
     background-color: rgba(238, 245, 251, 0.33);
     box-shadow: 0px 8px 32px 0 rgba(71, 79, 141, 0.33);
     backdrop-filter: blur(3px);
     padding: 16px 16px 16px 16px;
     border-radius: 16px;
-}
-
-.form-text-below{
+  }
+  
+  .form-text-below{
     font-size: 20px;
     padding: 5px;
     margin: 5px;
-}
+  }
+  

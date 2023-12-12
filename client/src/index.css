@@ -1,3 +1,9 @@
+.layout{
+  width: 100%;
+  margin: auto;
+  background-color: #EBF5FB;
+}
+
 /* loader */
 .spinner {
     height: 100vh;
@@ -7,3 +13,56 @@
     z-index: 9999;
     background-color: #F5EEF8 ;
   }
+
+/*-----navbar--------*/
+.logo{
+  display: flex;
+  align-items: center;
+  font-size: large;
+  
+}
+
+.logo h6 {
+  margin-right: 10px; /* Add some spacing between the h6 and img */
+  font-size: 18px;
+  margin-top: 5px;
+  color: #EBF5FB;
+}
+
+.logo img{
+  height: 25px;
+  width: 25px;
+
+}
+
+.navbar {
+  padding: 10px 13%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1A5276;
+}
+
+
+
+.navlinks a{
+  text-decoration: none;
+  color: #EBF5FB;
+  width: 100px;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo h6 {
+    margin-bottom: 10px;
+  }
+
+  .navlinks {
+    margin-top: 10px;
+  }
+}
+
