@@ -19,19 +19,19 @@
   display: flex;
   align-items: center;
   font-size: large;
-  
 }
 
-.logo h6 {
+.logo a {
   margin-right: 10px; /* Add some spacing between the h6 and img */
   font-size: 18px;
   margin-top: 5px;
   color: #EBF5FB;
+  text-decoration: none;
 }
 
 .logo img{
-  height: 25px;
-  width: 25px;
+  height: 70px;
+  width: 70px;
 
 }
 
@@ -41,14 +41,70 @@
   justify-content: space-between;
   align-items: center;
   background-color: #1A5276;
+  height: 20%;
+  padding-top: 50px;
+  padding-bottom: 30px;
 }
 
-
-
-.navlinks a{
+.navlinks a {
   text-decoration: none;
   color: #EBF5FB;
-  width: 100px;
+}
+
+.active a{
+  background-color: rgba(41, 128, 185, 0.9);
+  padding: 10px;
+  text-decoration: none;
+  color: #EBF5FB;
+  border-radius: 2px;
+
+}
+
+/*-----header--------*/
+
+header {
+  background-color: #D6EAF8;
+  padding: 40px 0;
+}
+
+.header section {
+color: #1A5276;
+padding: 10px 13%;
+position: relative;
+}
+
+.banner p {
+  font-size: 20px;
+  max-width: 520px;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.appointment-button {
+  background-color: #1A5276;
+  color: #FDFEFE;
+  padding: 14px 18px;
+  border: none;
+  text-decoration: none;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.banner-img{
+  position: absolute;
+  right: 13%;
+  top:2%;
+  bottom: 15%;
+  width: 400px;
+
+}
+
+.banner-img img {
+  width: 100%;
+  height: 380px;
+  border-radius: 20px;
 }
 
 @media (max-width: 768px) {
