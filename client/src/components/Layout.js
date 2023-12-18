@@ -2,13 +2,17 @@ import React from "react";
 
 import Navbar from "./Navbar";
 import Header from "./Header";
+import { useSelector } from "react-redux";
+import Information from "./Information";
 
-const Layout = ({ children }) => {
+const Layout = () => {
+  const { user } = useSelector((state) => state.user);
+
   return (
     <>
       <Navbar />
-      <Header />
-      <div className="layout">{children}</div>
+      {!user?.isAdmin && <Header />}
+      <Information />
     </>
   );
 };
