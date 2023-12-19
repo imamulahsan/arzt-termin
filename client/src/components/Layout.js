@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import Header from "./Header";
 import { useSelector } from "react-redux";
 import Information from "./Information";
+import Services from "./Services";
 
 const Layout = () => {
   const { user } = useSelector((state) => state.user);
@@ -13,6 +14,7 @@ const Layout = () => {
       <Navbar />
       {!user?.isAdmin && <Header />}
       <Information />
+      <Services />
     </>
   );
 };

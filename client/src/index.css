@@ -133,22 +133,75 @@ position: relative;
 }
 
 .info-col{
-  padding: 5px;
+  padding: 25px;
 }
 
 .info-card{
-  background-color: rgba(26, 82, 118, 0.9);;
+  background: linear-gradient(to bottom, rgba(26, 82, 118, 0.9), rgba(212, 230, 241 , 0)); /* You can customize the colors and stops */
+  margin: 10px;
+  box-shadow: 0 4px 8px #4A235A; /* Add box shadow for a subtle effect */
 }
 
-.card-text{
-  font-size: 15px;
+
+.card-text h3{
+  font-size: 25px;
+  font-weight: bold;
   color: #EBF5FB; /* Example color */
+}
+
+.card-text p{
+  font-size: 15px;
+  color: #EBF5FB;
 }
 
 .card-image img{
   height: 150px;
 
 }
+
+/*-----services--------*/
+.services-header{
+  padding: 10px 13%;
+  background-color: #D6EAF8;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+}
+
+.services-header h2{
+  font-weight: bold;
+  margin: 0; /* Remove default margin to center vertically */
+}
+
+.services-container{
+  padding: 10px 13%;
+  background-color: #D6EAF8;
+}
+
+.services-container img{
+  height: 100px;
+  width: 100px;
+}
+
+.centered-column{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.centered-content{
+  text-align: center;
+}
+
+.centered-content p{
+  font-size: large;
+  font-weight: bold;
+}
+
+
+
 
 
 @media (max-width: 768px) {
