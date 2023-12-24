@@ -1,10 +1,11 @@
-import './App.css';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Team from "./pages/Team";
 import { useSelector } from "react-redux";
-import Spinner from './components/Spinner';
+import Spinner from "./components/Spinner";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 
@@ -12,19 +13,12 @@ function App() {
   const { loading } = useSelector((state) => state.alerts);
   return (
     <>
-    <BrowserRouter>
+      <BrowserRouter>
         {loading ? (
           <Spinner />
         ) : (
           <Routes>
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <HomePage />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/" element={<HomePage />} />
             <Route
               path="/login"
               element={
@@ -39,6 +33,14 @@ function App() {
                 <PublicRoute>
                   <Register />
                 </PublicRoute>
+              }
+            />
+            <Route
+              path="/team"
+              element={
+                <ProtectedRoute>
+                  <Team />
+                </ProtectedRoute>
               }
             />
           </Routes>

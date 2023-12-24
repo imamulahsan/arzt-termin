@@ -8,8 +8,8 @@ export const userMenu = [
     path: "/services",
   },
   {
-    name: "Openings",
-    path: "/openings",
+    name: "Team",
+    path: "/team",
   },
   {
     name: "Contact us",

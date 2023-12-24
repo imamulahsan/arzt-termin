@@ -8,7 +8,9 @@ const Header = () => {
       <header className="header">
         <section>
           <div className="banner">
-            <h2>Dr. medic Moon Chae-Won</h2>
+            <div className="banner-title">
+              <h2>Dr. medic Moon Chae-Won</h2>
+            </div>
             <h3>Specialist in General Medicine</h3>
             <Link to="/appointment">
               <button className="appointment-button" aria-label="On Click">

@@ -74,10 +74,15 @@ padding: 10px 13%;
 position: relative;
 }
 
-.banner h2{
+.banner-title{
+  background: linear-gradient(to bottom, rgba(26, 82, 118, 0.9), rgba(6, 6, 6, 0.8));
+  width: 45%;
+}
+
+.banner-title h2{
   font-size: 40px;
   font-weight: bold;
-  color: #1F618D; /* Example color */
+  color: #d8dee2; /* Example color */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Example text shadow for a stylish effect */
   margin-top: 10px;
   margin-bottom: 25px;
@@ -107,10 +112,11 @@ position: relative;
 .banner-img{
   position: absolute;
   right: 13%;
-  top: -17%; /* Adjust this value to move it upwards */
+  top: -10%; /* Adjust this value to move it upwards */
   width: 600px;
   overflow: hidden;
   margin-top: 5px;
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5);
 
 }
 
@@ -180,8 +186,8 @@ position: relative;
 }
 
 .services-container img{
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 100px;
 }
 
 .centered-column{
