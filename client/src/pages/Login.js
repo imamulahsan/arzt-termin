@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import {
   Row,
   Col,
@@ -10,16 +11,27 @@ import {
   Divider,
   message,
 } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../redux/features/alertSlice";
 import loginFormImage from "../images/login-form-bg.jpg";
 import "../styles/LoginStyle.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { setUser } from "../redux/features/userSlice"; // Import the setUser action
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user); // Get user from the state
+
+  useEffect(() => {
+    // This effect will run whenever the user state changes
+    console.log("User changed:", user);
+    if (user) {
+      // If user is present, navigate to the home page
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const onfinishHandler = async (values) => {
     try {
@@ -30,7 +42,7 @@ const Login = () => {
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
         message.success("Login Successfully");
-        navigate("/");
+        dispatch(setUser(res.data.user));
       } else {
         message.error(res.data.message);
       }

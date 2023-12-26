@@ -3,22 +3,29 @@ import { userMenu, adminMenu } from "./../data/navmenu";
 import { Link as RouterLink, useNavigate, useLocation } from "react-router-dom";
 import logoImage from "../images/arzt-termin-logo.svg";
 import { message } from "antd";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link as ScrollLink } from "react-scroll";
+import { useEffect } from "react";
+import { setUser } from "../redux/features/userSlice"; // Import the setUser action
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
+
+  useEffect(() => {
+    // This effect will run whenever the user state changes
+  }, [user]);
 
   const handleLogout = () => {
     localStorage.clear();
     message.success("Logout Successfully");
+    dispatch(setUser(null)); // Clear the user state
     navigate("/login");
   };
 
   const handleProfile = () => {
-    localStorage.clear();
     navigate("/profile");
   };
 
@@ -59,21 +66,21 @@ const Navbar = () => {
           );
         })}
 
-        <div className={`navlinks `} onClick={handleProfile}>
-          <RouterLink to="/profile">{user?.name}</RouterLink>
-        </div>
+        <div className="navlinks">
+          {user && (
+            <>
+              {/* Profile link */}
+              <RouterLink onClick={handleProfile} to="/profile">
+                {user.name}
+              </RouterLink>
 
-        {user ? (
-          // If user is logged in, show "Logout"
-          <div className={`navlinks `} onClick={handleLogout}>
-            <RouterLink to="/login">Logout</RouterLink>
-          </div>
-        ) : (
-          // If user is not logged in, show "Login"
-          <div className={`navlinks `}>
-            <RouterLink to="/login">Login</RouterLink>
-          </div>
-        )}
+              {/* Logout button */}
+            </>
+          )}
+        </div>
+        <div className={`navlinks `} onClick={handleLogout}>
+          <RouterLink to="/login">Logout</RouterLink>
+        </div>
       </nav>
     </>
   );
