@@ -4,7 +4,6 @@ import { Link as RouterLink, useNavigate, useLocation } from "react-router-dom";
 import logoImage from "../images/arzt-termin-logo.svg";
 import { message } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { Link as ScrollLink } from "react-scroll";
 import { useEffect } from "react";
 import { setUser } from "../redux/features/userSlice"; // Import the setUser action
 
@@ -46,23 +45,13 @@ const Navbar = () => {
         {navMenu.map((menu) => {
           const isActive = location.pathname === menu.path;
           return (
-            <>
-              <div className={`navlinks ${isActive && "active"}`}>
-                {menu.name === "Services" ? (
-                  <ScrollLink
-                    to="services" // This should match the 'name' in Services.js
-                    spy={true}
-                    smooth={true}
-                    offset={-70} // Adjust this offset as needed
-                    duration={500}
-                  >
-                    {menu.name}
-                  </ScrollLink>
-                ) : (
-                  <RouterLink to={menu.path}>{menu.name}</RouterLink>
-                )}
-              </div>
-            </>
+            <div key={menu.name} className={`navlinks ${isActive && "active"}`}>
+              {menu.name === "Services" ? (
+                <RouterLink to={menu.path}>{menu.name}</RouterLink>
+              ) : (
+                <RouterLink to={menu.path}>{menu.name}</RouterLink>
+              )}
+            </div>
           );
         })}
 

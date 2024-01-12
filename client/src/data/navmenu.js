@@ -5,7 +5,7 @@ export const userMenu = [
   },
   {
     name: "Services",
-    path: "/services",
+    path: "/overallservices",
   },
   {
     name: "Team",

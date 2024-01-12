@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import Spinner from "./components/Spinner";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
+import OverallService from "./pages/OverallService";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -47,6 +48,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Team />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/overallservices"
+              element={
+                <ProtectedRoute>
+                  <OverallService />
                 </ProtectedRoute>
               }
             />
