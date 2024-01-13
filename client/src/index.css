@@ -352,6 +352,55 @@ position: relative;
   color: #e8e8e8;
 }
 
+/* ==============================
+   OVERALL SERVICES COMPONENT (LINKED PAGE)
+   ============================== */
+   .overall-services-header{
+    padding: 10px 13%;
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  }
+
+  .overall-services-header h2{
+    font-size: 60px;
+    font-weight: 600;
+    color: transparent;
+    background-image: linear-gradient(to right ,#553c9a, #ee4b2b, #00c2cb, #ff7f50, #553c9a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-size: 200%;
+    background-position: -200%;
+    animation: animated-gradient 2s infinite alternate-reverse;
+    margin: 0;
+  }
+  @keyframes animated-gradient{
+    to{
+      background-position: 200%;
+    }
+  }
+
+
+  .overall-services-description {
+    padding: 20px;
+    text-align: center;
+    background: linear-gradient(to right, #AED6F1, #EAF2F8, #AED6F1 ); /* Set linear gradient */ /* Set background color */
+    border-bottom: 1px solid #e8e8e8; /* Add a border at the bottom */
+  }
+
+  .overall-services-description p {
+    margin: 0 0 10px; /* Adjust margin for better spacing */
+    font-size: 16px; /* Set font size */
+  }
+
+  .overall-services-description p:last-child {
+    margin-bottom: 0px; /* Remove bottom margin for the last paragraph */
+    font-style: italic; /* Italicize the last paragraph */
+  }
+
+
 
 
 @media (max-width: 768px) {
