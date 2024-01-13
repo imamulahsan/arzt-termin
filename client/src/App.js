@@ -9,6 +9,8 @@ import Spinner from "./components/Spinner";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import OverallService from "./pages/OverallService";
+import Contact from "./pages/Contact";
+import Users from "./pages/admin/Users";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -56,6 +58,24 @@ function App() {
               element={
                 <ProtectedRoute>
                   <OverallService />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/contact"
+              element={
+                <ProtectedRoute>
+                  <Contact />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/admin/users"
+              element={
+                <ProtectedRoute>
+                  <Users />
                 </ProtectedRoute>
               }
             />

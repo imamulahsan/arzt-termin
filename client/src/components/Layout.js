@@ -15,9 +15,9 @@ const Layout = () => {
     <>
       <Navbar />
       {!user?.isAdmin && <Header />}
-      <Information />
-      <Services />
-      <Currentnews />
+      {!user?.isAdmin && <Information />}
+      {!user?.isAdmin && <Services />}
+      {!user?.isAdmin && <Currentnews />}
       <Footer />
     </>
   );

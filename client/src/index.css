@@ -400,6 +400,65 @@ position: relative;
     font-style: italic; /* Italicize the last paragraph */
   }
 
+  /* ==============================
+   OVERALL SERVICES COMPONENT (LINKED PAGE)
+   ============================== */
+
+   .contact-header {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .contact-description {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .contact-form {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .contact-form form{
+  display: flex;
+  flex-direction: column;
+  }
+
+  .contact-form label{
+    margin-bottom: 8px;
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  .contact-form input,
+  textarea {
+    padding: 8px;
+    margin-bottom: 16px;
+    background: #FEF9E7;
+  }
+
+  .contact-form button {
+  background-color: #1A5276;
+  color: #FDFEFE;
+  padding: 14px 18px;
+  border: none;
+  text-decoration: none;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  }
+
+    /* ==============================
+   USERS COMPONENT (LINKED PAGE)
+   ============================== */
+.user-description{
+  padding: 0 13%;
+
+}
+
+
 
 
 

@@ -1,3 +1,4 @@
+//usermenu
 export const userMenu = [
   {
     name: "Appointments",
@@ -25,7 +26,7 @@ export const adminMenu = [
   },
   {
     name: "Users",
-    path: "/users",
+    path: "/admin/users",
   },
   {
     name: "Profile",
