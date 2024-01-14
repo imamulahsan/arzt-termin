@@ -12,7 +12,7 @@ const Header = () => {
               <h2>Dr. medic Moon Chae-Won</h2>
             </div>
             <h3>Specialist in General Medicine</h3>
-            <Link to="/appointment">
+            <Link to="/appointmentbooking">
               <button className="appointment-button" aria-label="On Click">
                 Book an Appointment
               </button>

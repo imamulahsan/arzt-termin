@@ -55,7 +55,7 @@ const OverallService = () => {
           </Col>
           <Col span={8}>
             <Statistic title="Active Number of Patients" value={93} />
-            <Link to="/appointment">
+            <Link to="/appointmentbooking">
               <Button
                 style={{
                   marginTop: 16,

@@ -1,4 +1,5 @@
 const userModel = require("../models/userModel.js");
+const appointmentModel = require("../models/appointmentModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -79,4 +80,30 @@ const authController = async (req, res) => {
   }
 };
 
-module.exports = { loginController, registerController, authController };
+const appointmentController = async (req, res) => {
+  try {
+    const newAppointment = await appointmentModel({
+      ...req.body,
+      status: "pending",
+    });
+    await newAppointment.save();
+    res.status(201).send({
+      success: true,
+      message: "Appointment Created Successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Error While Applying For An Appointment",
+    });
+  }
+};
+
+module.exports = {
+  loginController,
+  registerController,
+  authController,
+  appointmentController,
+};

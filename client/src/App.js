@@ -11,6 +11,7 @@ import PublicRoute from "./components/PublicRoute";
 import OverallService from "./pages/OverallService";
 import Contact from "./pages/Contact";
 import Users from "./pages/admin/Users";
+import AppointmentBooking from "./pages/AppointmentBooking";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -26,6 +27,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <HomePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/appointmentbooking"
+              element={
+                <ProtectedRoute>
+                  <AppointmentBooking />
                 </ProtectedRoute>
               }
             />
