@@ -22,7 +22,7 @@ export const userMenu = [
 export const adminMenu = [
   {
     name: "All Appointments",
-    path: "/allappointments",
+    path: "/admin/appointmentlist",
   },
   {
     name: "Users",

@@ -1,18 +1,38 @@
-import React from "react";
-import { Form, Input, DatePicker, Select, Button, message } from "antd";
+import React, { useState } from "react";
+import {
+  Form,
+  Input,
+  DatePicker,
+  Select,
+  Button,
+  message,
+  TimePicker,
+} from "antd";
 import Navbar from "../components/Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { showLoading, hideLoading } from "../redux/features/alertSlice";
 import axios from "axios";
+import moment from "moment";
 
 const { Option } = Select;
+
+const insuranceCompanies = [
+  "Allianz",
+  "AOK",
+  "TK (Techniker Krankenkasse)",
+  "Barmer",
+  "DKV",
+  "Other",
+];
 
 const AppointmentBookingForm = () => {
   const { user } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState();
   //handle form
   const handleFinish = async (values) => {
     try {
@@ -43,6 +63,19 @@ const AppointmentBookingForm = () => {
     }
   };
 
+  // function to handle availability check
+  const handleAvailabilityCheck = () => {
+    // Implement your availability check logic here
+    // You may want to send a request to the server to check if the selected time is available
+    // If available, you can show a success message; otherwise, show an error message.
+    message.success("Time is available!");
+  };
+
+  // function to disable past days
+  const disabledDate = (current) => {
+    return current && current < moment().startOf("day");
+  };
+
   return (
     <>
       <Navbar />
@@ -57,6 +90,7 @@ const AppointmentBookingForm = () => {
       </div>
 
       <div className="appointment-form">
+        <h2>Insurance Information</h2>
         <Form
           name="appointmentBookingForm"
           onFinish={handleFinish}
@@ -66,10 +100,19 @@ const AppointmentBookingForm = () => {
             name="insuranceName"
             label="Insurance Name"
             rules={[
-              { required: true, message: "Please enter insurance name!" },
+              { required: true, message: "Please select insurance name!" },
             ]}
           >
-            <Input />
+            <Select
+              aria-required="true"
+              placeholder="Select an insurance company"
+            >
+              {insuranceCompanies.map((company) => (
+                <Option key={company} value={company}>
+                  {company}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -81,6 +124,8 @@ const AppointmentBookingForm = () => {
           >
             <Input />
           </Form.Item>
+
+          <h2>Personal Information</h2>
 
           <Form.Item
             name="firstName"
@@ -128,12 +173,21 @@ const AppointmentBookingForm = () => {
             <Input />
           </Form.Item>
 
+          <h2>Appointment Information</h2>
+
           <Form.Item
             name="date"
             label="Date"
             rules={[{ required: true, message: "Please select a date!" }]}
           >
-            <DatePicker />
+            <DatePicker
+              aria-required={"true"}
+              format="DD-MM-YYYY"
+              onChange={(value) => {
+                setDate(moment(value).format("DD-MM-YYYY"));
+              }}
+              disabledDate={disabledDate} // set the disabledDate function
+            />
           </Form.Item>
 
           <Form.Item
@@ -143,20 +197,48 @@ const AppointmentBookingForm = () => {
               { required: true, message: "Please enter appointment time!" },
             ]}
           >
-            <Input />
+            <TimePicker
+              aria-required="true"
+              format="HH:mm"
+              minuteStep={30}
+              suffixIcon=""
+              onChange={(value) => {
+                setTime(moment(value).format("HH:mm"));
+              }}
+              disabledHours={() => {
+                const disabledHours = [];
+                for (let i = 0; i < 9; i++) {
+                  // Disable hours before 9:00
+                  disabledHours.push(i);
+                }
+                for (let i = 19; i < 24; i++) {
+                  // Disable hours after 18:00
+                  disabledHours.push(i);
+                }
+                return disabledHours;
+              }}
+              disabledMinutes={(selectedHour) => {
+                if (selectedHour < 9 || selectedHour >= 18) {
+                  // Disable all minutes if the hour is outside 9:00-18:00
+                  return [];
+                }
+                // Disable minutes for the first half-hour of each hour
+                return selectedHour % 2 === 1 ? [0] : [];
+              }}
+            />
           </Form.Item>
 
-          <Form.Item name="status" label="Status">
-            <Select>
-              <Option value="pending">Pending</Option>
-              <Option value="approved">Approved</Option>
-              <Option value="rejected">Rejected</Option>
-            </Select>
+          {/* Check Availability Button */}
+          <Form.Item>
+            <Button type="primary" onClick={handleAvailabilityCheck}>
+              Check Availability
+            </Button>
           </Form.Item>
 
+          {/* Confirm Booking Button */}
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Submit
+              Confirm Booking
             </Button>
           </Form.Item>
         </Form>
