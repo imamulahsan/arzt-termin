@@ -2,6 +2,7 @@ const userModel = require("../models/userModel.js");
 const appointmentModel = require("../models/appointmentModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const moment = require("moment");
 
 const registerController = async (req, res) => {
   try {
@@ -82,6 +83,9 @@ const authController = async (req, res) => {
 
 const appointmentController = async (req, res) => {
   try {
+    req.body.date = moment(req.body.date, "DD-MM-YYYY").toISOString();
+    req.body.time = moment(req.body.time, "HH:mm").toISOString();
+    req.body.status = "pending";
     const newAppointment = await appointmentModel({
       ...req.body,
       status: "pending",
@@ -101,9 +105,51 @@ const appointmentController = async (req, res) => {
   }
 };
 
+// booking bookingAvailabilityController
+const appointmentAvailabilityController = async (req, res) => {
+  try {
+    const date = moment(req.body.date, "DD-MM-YYYY").toISOString();
+    const fromTime = moment(req.body.time, "HH:mm")
+      .subtract(1, "hours")
+      .toISOString();
+    const toTime = moment(req.body.time, "HH:mm").add(1, "hours").toISOString();
+    const userId = req.body.userId;
+
+    // Check for existing appointments for the current user within the specified time range
+    const existingAppointments = await appointmentModel.find({
+      userId,
+      date,
+      time: {
+        $gte: fromTime,
+        $lte: toTime,
+      },
+    });
+
+    if (existingAppointments.length > 0) {
+      return res.status(200).send({
+        message: "Appointments not available at this time",
+        success: true,
+      });
+    }
+
+    return res.status(200).send({
+      success: true,
+      message: "Appointments available",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({
+      success: false,
+      error,
+      message: "Error in availability check",
+    });
+  }
+};
+
 module.exports = {
   loginController,
   registerController,
   authController,
   appointmentController,
+  appointmentAvailabilityController,
 };

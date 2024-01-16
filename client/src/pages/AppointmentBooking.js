@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   Form,
   Input,
@@ -26,6 +27,12 @@ const insuranceCompanies = [
   "Other",
 ];
 
+const doctorlist = [
+  "Dr. medic Moon Chae-Won",
+  "Dr. Selena Gomez",
+  "Physiotherapist. Emily Rose",
+];
+
 const AppointmentBookingForm = () => {
   const { user } = useSelector((state) => state.user);
 
@@ -33,42 +40,61 @@ const AppointmentBookingForm = () => {
   const navigate = useNavigate();
   const [date, setDate] = useState("");
   const [time, setTime] = useState();
+  const params = useParams();
+
   //handle form
   const handleFinish = async (values) => {
     try {
       dispatch(showLoading());
-      const res = await axios.post(
-        "/api/v1/user//appointmentbook",
-        {
-          ...values,
-          userId: user._id,
-        },
+
+      // Perform availability check
+      const availabilityCheckRes = await axios.post(
+        "/api/v1/user/appointment-availability",
+        { userId: params.userId, date, time },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      dispatch(hideLoading());
-      if (res.data.success) {
-        message.success(res.data.message);
-        navigate("/");
+
+      if (availabilityCheckRes.data.success) {
+        // If the appointment is available, proceed with the booking
+        const bookingRes = await axios.post(
+          "/api/v1/user/appointmentbook",
+          {
+            ...values,
+            userId: user._id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        if (bookingRes.data.success) {
+          message.success(bookingRes.data.message);
+          navigate("/");
+        } else {
+          message.error(bookingRes.data.message);
+        }
       } else {
-        message.error(res.data.message);
+        // If the appointment is not available, show a message or take appropriate action
+        message.error(availabilityCheckRes.data.message);
+
+        // You can also reset the form or take other actions here if needed
+        // Resetting the date and time to empty values
+        setDate("");
+        setTime("");
       }
+
+      dispatch(hideLoading());
     } catch (error) {
       dispatch(hideLoading());
-      console.log(error);
-      message.error("Somthing Went Wrrong ");
+      console.error(error);
+      message.error("Something went wrong.");
     }
-  };
-
-  // function to handle availability check
-  const handleAvailabilityCheck = () => {
-    // Implement your availability check logic here
-    // You may want to send a request to the server to check if the selected time is available
-    // If available, you can show a success message; otherwise, show an error message.
-    message.success("Time is available!");
   };
 
   // function to disable past days
@@ -91,11 +117,7 @@ const AppointmentBookingForm = () => {
 
       <div className="appointment-form">
         <h2>Insurance Information</h2>
-        <Form
-          name="appointmentBookingForm"
-          onFinish={handleFinish}
-          initialValues={{ status: "pending" }}
-        >
+        <Form name="appointmentBookingForm" onFinish={handleFinish}>
           <Form.Item
             name="insuranceName"
             label="Insurance Name"
@@ -176,6 +198,20 @@ const AppointmentBookingForm = () => {
           <h2>Appointment Information</h2>
 
           <Form.Item
+            name="doctorName"
+            label="Doctor"
+            rules={[{ required: true, message: "Please select doctor name!" }]}
+          >
+            <Select aria-required="true" placeholder="Select an doctor">
+              {doctorlist.map((doctor) => (
+                <Option key={doctor} value={doctor}>
+                  {doctor}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
             name="date"
             label="Date"
             rules={[{ required: true, message: "Please select a date!" }]}
@@ -226,13 +262,6 @@ const AppointmentBookingForm = () => {
                 return selectedHour % 2 === 1 ? [0] : [];
               }}
             />
-          </Form.Item>
-
-          {/* Check Availability Button */}
-          <Form.Item>
-            <Button type="primary" onClick={handleAvailabilityCheck}>
-              Check Availability
-            </Button>
           </Form.Item>
 
           {/* Confirm Booking Button */}
