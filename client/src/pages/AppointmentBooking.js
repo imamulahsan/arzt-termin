@@ -236,30 +236,32 @@ const AppointmentBookingForm = () => {
             <TimePicker
               aria-required="true"
               format="HH:mm"
-              minuteStep={30}
+              minuteStep={15}
               suffixIcon=""
               onChange={(value) => {
                 setTime(moment(value).format("HH:mm"));
               }}
-              disabledHours={() => {
+              disabledTime={(current) => {
                 const disabledHours = [];
+                const disabledMinutes = [];
+
+                // Disable all hours before 09:00 and after 18:00
                 for (let i = 0; i < 9; i++) {
-                  // Disable hours before 9:00
                   disabledHours.push(i);
                 }
                 for (let i = 19; i < 24; i++) {
-                  // Disable hours after 18:00
                   disabledHours.push(i);
                 }
-                return disabledHours;
-              }}
-              disabledMinutes={(selectedHour) => {
-                if (selectedHour < 9 || selectedHour >= 18) {
-                  // Disable all minutes if the hour is outside 9:00-18:00
-                  return [];
-                }
+
                 // Disable minutes for the first half-hour of each hour
-                return selectedHour % 2 === 1 ? [0] : [];
+                if (current && (current.hour() < 9 || current.hour() >= 18)) {
+                  disabledMinutes.push(0, 30);
+                }
+
+                return {
+                  disabledHours: () => disabledHours,
+                  disabledMinutes: () => disabledMinutes,
+                };
               }}
             />
           </Form.Item>
